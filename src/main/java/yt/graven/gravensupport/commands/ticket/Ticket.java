@@ -30,7 +30,7 @@ import net.dv8tion.jda.api.requests.RestAction;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 import yt.graven.gravensupport.utils.exceptions.TicketAlreadyExistsException;
 import yt.graven.gravensupport.utils.messages.Embeds;
-import yt.graven.gravensupport.utils.messages.TMessage;
+import yt.graven.gravensupport.utils.messages.TicketMessage;
 import yt.graven.gravensupport.utils.messages.serializable.SerializableMessageArray;
 
 public class Ticket {
@@ -107,7 +107,7 @@ public class Ticket {
         .flatMap(
             c ->
                 c.sendMessage(
-                    TMessage.from(embeds.proposeOpening(sentEmote.getAsMention()))
+                    TicketMessage.from(embeds.proposeOpening(sentEmote.getAsMention()))
                         .actionRow()
                         .add(Button.secondary("?", "Raison : ").asDisabled())
                         .build()
@@ -138,7 +138,7 @@ public class Ticket {
    * @return
    */
   public void forceOpening(User by, MessageChannel srcChannel) {
-    TMessage.from(embeds.forceOpening(sentEmote.getAsMention()))
+    TicketMessage.from(embeds.forceOpening(sentEmote.getAsMention()))
         .sendMessage(from)
         .queue(
             unused -> openOnServer(true, by, null),
@@ -171,7 +171,7 @@ public class Ticket {
     }
 
     if (!forced) {
-      TMessage.create()
+      TicketMessage.create()
           .setEmbeds(
               new EmbedBuilder()
                   .setTitle("\uD83D\uDCDD Raison de l'ouverture du ticket")
@@ -180,7 +180,7 @@ public class Ticket {
                   .build())
           .sendMessage(channel)
           .queue();
-      TMessage.create()
+      TicketMessage.create()
           .setEmbeds(
               new EmbedBuilder()
                   .setTitle("Sélectionnez le premier message à envoyer :")
@@ -202,7 +202,7 @@ public class Ticket {
     TextChannel ticketChannel =
         moderationGuild.getTextChannelById(
             config.getString("config.ticket_guild.channels_ids.tickets"));
-    TMessage.from(embeds.ticketOpening(forced, by, from, channel, reason))
+    TicketMessage.from(embeds.ticketOpening(forced, by, from, channel, reason))
         .actionRow()
         .button()
         .withText("Aller au salon")
@@ -334,7 +334,7 @@ public class Ticket {
           true);
     }
 
-    TMessage.from(embedBuilder.build())
+    TicketMessage.from(embedBuilder.build())
         .actionRow()
         .button("confirm-message")
         .withStyle(ButtonStyle.SUCCESS)
@@ -357,8 +357,8 @@ public class Ticket {
         .execute(
             () -> {
               try {
-                TMessage builder =
-                    TMessage.from(new MessageBuilder(message))
+                TicketMessage builder =
+                    TicketMessage.from(new MessageBuilder(message))
                         .setContent(
                             message.getContentRaw().startsWith("'")
                                 ? message.getContentRaw().substring(1).trim()
@@ -423,7 +423,7 @@ public class Ticket {
               TextChannel ticketsChannel =
                   moderationGuild.getTextChannelById(
                       config.getString("config.ticket_guild.channels_ids.tickets"));
-              TMessage.from(embeds.ticketClosing(from, report.getJumpUrl()))
+              TicketMessage.from(embeds.ticketClosing(from, report.getJumpUrl()))
                   .actionRow()
                   .button()
                   .withText("Aller au rapport")
@@ -438,7 +438,7 @@ public class Ticket {
                   .sendMessage(ticketsChannel)
                   .complete();
 
-              TMessage.create()
+              TicketMessage.create()
                   .setEmbeds(
                       new EmbedBuilder()
                           .setColor(Color.RED)
@@ -461,6 +461,6 @@ public class Ticket {
     String errorMessage = "Impossible d'envoyer un message privé à cet utilisateur!";
     MessageEmbed embed = embeds.error(errorMessage).build();
 
-    TMessage.from(embed).sendMessage(channel).queue();
+    TicketMessage.from(embed).sendMessage(channel).queue();
   }
 }
