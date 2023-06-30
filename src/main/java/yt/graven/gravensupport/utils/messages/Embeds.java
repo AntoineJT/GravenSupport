@@ -43,12 +43,8 @@ public class Embeds {
     public TicketMessage ticketAlreadyExistsMessage(GuildMessageChannel ticketChannel, boolean personal) {
         return MessageFactory.create()
                 .addEmbeds(ticketAlreadyExists(personal))
-                .addActionRow(actionRow -> actionRow
-                        .addButton(button -> button
-                                .setText("Aller au ticket")
-                                .setLink(ticketChannel.getJumpUrl())
-                        )
-                );
+                .addActionRow(actionRow -> actionRow.addButton(
+                        button -> button.setText("Aller au ticket").setLink(ticketChannel.getJumpUrl())));
     }
 
     public TicketMessage ping(PingComputer manager) {
@@ -60,13 +56,10 @@ public class Embeds {
 
         return MessageFactory.create()
                 .addEmbeds(embed)
-                .addActionRow(actionRow -> actionRow
-                        .addButton("refresh-ping", button -> button
-                                .setStyle(ButtonStyle.PRIMARY)
+                .addActionRow(
+                        actionRow -> actionRow.addButton("refresh-ping", button -> button.setStyle(ButtonStyle.PRIMARY)
                                 .setText("Actualiser")
-                                .setEmoji(Emoji.fromUnicode("🔁"))
-                        )
-                );
+                                .setEmoji(Emoji.fromUnicode("🔁"))));
     }
 
     public EmbedBuilder noTicketAttached() {

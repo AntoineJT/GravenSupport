@@ -115,25 +115,18 @@ public class Ticket {
 
         MessageFactory.create()
                 .addEmbeds(embeds.proposeOpening(sentEmote.getFormatted()))
-                .addActionRow(actionRow -> actionRow
-                        .addButton("?", button -> button
-                                .setText("Raison : ")
-                                .setDisabled(true)
-                        )
-                )
-                .addActionRow(actionRow -> actionRow
-                        .addSelectMenu("opening-menu", selectMenu -> selectMenu
-                                .addOption(Emoji.fromUnicode("📝"), "Signalement utilisateur", "op-user-report")
-                                .addOption(Emoji.fromUnicode("⛔"), "Contester une sanction", "op-unban")
-                                .addOption(Emoji.fromUnicode("✨"), "Proposer une amélioration", "op-enhancement")
-                                .addOption(Emoji.fromUnicode("\uD83D\uDCAC"), "Autre", "op-other")
-                        )
-                )
+                .addActionRow(actionRow -> actionRow.addButton(
+                        "?", button -> button.setText("Raison : ").setDisabled(true)))
+                .addActionRow(actionRow -> actionRow.addSelectMenu("opening-menu", selectMenu -> selectMenu
+                        .addOption(Emoji.fromUnicode("📝"), "Signalement utilisateur", "op-user-report")
+                        .addOption(Emoji.fromUnicode("⛔"), "Contester une sanction", "op-unban")
+                        .addOption(Emoji.fromUnicode("✨"), "Proposer une amélioration", "op-enhancement")
+                        .addOption(Emoji.fromUnicode("\uD83D\uDCAC"), "Autre", "op-other")))
                 .send(from)
                 .queue(
-                        msg -> reply.editOriginal("➡️ " + msg.getChannel().getAsMention()).queue(),
-                        errorHandler
-                );
+                        msg -> reply.editOriginal("➡️ " + msg.getChannel().getAsMention())
+                                .queue(),
+                        errorHandler);
     }
 
     /**
@@ -192,23 +185,20 @@ public class Ticket {
                 .setColor(0x48dbfb)
                 .build();
 
-        TicketMessage reasonMessage = MessageFactory.create()
-                .addEmbeds(reasonEmbed);
+        TicketMessage reasonMessage = MessageFactory.create().addEmbeds(reasonEmbed);
 
         if (reason instanceof TicketOpeningReason.UserReport r) {
             User user = r.user(category.getJDA());
 
-                if (user != null) {
-                    reasonMessage.addActionRow(actionRow -> actionRow.addButton(
-                                    "open-with-reported;%s".formatted(user.getId()), button -> button
-                                            .setText("Ouvrir un ticket avec la personne signalée")
-                                            .setEmoji(Emoji.fromUnicode("↗\uFE0F"))
-                            )
-                    );
-                }
+            if (user != null) {
+                reasonMessage.addActionRow(actionRow ->
+                        actionRow.addButton("open-with-reported;%s".formatted(user.getId()), button -> button.setText(
+                                        "Ouvrir un ticket avec la personne signalée")
+                                .setEmoji(Emoji.fromUnicode("↗\uFE0F"))));
             }
+        }
 
-        if(!forced) {
+        if (!forced) {
             Message sentReasonMessage = reasonMessage.send(channel).complete();
             sentReasonMessage.pin().queue();
         }
@@ -216,12 +206,9 @@ public class Ticket {
         if (!forced) {
             MessageFactory.create()
                     .addEmbeds(firstMessageSelectorEmbed)
-                    .addActionRow(actionRow -> actionRow
-                            .addSelectMenu("first-sentence", selectMenu -> selectMenu
-                                    .addOption(Emoji.fromUnicode("☀️"), "Bonjour", "bonjour")
-                                    .addOption(Emoji.fromUnicode("🌙"), "Bonsoir", "bonsoir")
-                            )
-                    )
+                    .addActionRow(actionRow -> actionRow.addSelectMenu("first-sentence", selectMenu -> selectMenu
+                            .addOption(Emoji.fromUnicode("☀️"), "Bonjour", "bonjour")
+                            .addOption(Emoji.fromUnicode("🌙"), "Bonsoir", "bonsoir")))
                     .addActionRow(TicketActionRow::addDeleteButton)
                     .send(channel)
                     .complete();
@@ -233,15 +220,9 @@ public class Ticket {
         MessageFactory.create()
                 .addEmbeds(embeds.ticketOpening(forced, by, from, channel, reason.reason()))
                 .addActionRow(actionRow -> actionRow
-                        .addButton(button -> button
-                                .setText("Aller au salon")
-                                .setLink(channel.getJumpUrl())
-                        )
-                        .addButton(button -> button
-                                .setText("Aller à l'utilisateur")
-                                .setLink("https://discord.com/users/%s".formatted(from.getId()))
-                        )
-                )
+                        .addButton(button -> button.setText("Aller au salon").setLink(channel.getJumpUrl()))
+                        .addButton(button -> button.setText("Aller à l'utilisateur")
+                                .setLink("https://discord.com/users/%s".formatted(from.getId()))))
                 .send(ticketChannel)
                 .queue();
 
@@ -310,16 +291,11 @@ public class Ticket {
         MessageFactory.create()
                 .addEmbeds(confirmEmbed)
                 .addActionRow(actionRow -> actionRow
-                        .addButton("confirm-message", button -> button
-                                .setStyle(ButtonStyle.SUCCESS)
-                                .setText("Confirmer")
-                        )
-                        .addButton("deny-message", button -> button
-                                .setStyle(ButtonStyle.DANGER)
-                                .setText("Annuler")
-                        )
-                        .addDeleteButton()
-                )
+                        .addButton("confirm-message", button -> button.setStyle(ButtonStyle.SUCCESS)
+                                .setText("Confirmer"))
+                        .addButton("deny-message", button -> button.setStyle(ButtonStyle.DANGER)
+                                .setText("Annuler"))
+                        .addDeleteButton())
                 .send(message.getChannel())
                 .queue();
     }
@@ -337,16 +313,14 @@ public class Ticket {
                     .apply(builder -> {
                         FileUpload[] files = message.getAttachments().stream()
                                 .map(attachment -> FileUpload.fromData(
-                                        attachment.getProxy().download().join(),
-                                        attachment.getFileName())
-                                )
+                                        attachment.getProxy().download().join(), attachment.getFileName()))
                                 .toArray(FileUpload[]::new);
                         return builder.addFiles(files);
                     })
                     .send(from)
-                    .queue(cf::complete, e -> embeds.errorMessage(e.getMessage())
-                            .send(to)
-                            .queue());
+                    .queue(
+                            cf::complete,
+                            e -> embeds.errorMessage(e.getMessage()).send(to).queue());
         });
 
         return cf;
@@ -408,10 +382,7 @@ public class Ticket {
                 String errorMessage = "Impossible d'informer l'utilisateur de la fermeture du ticket !";
                 MessageEmbed embed = embeds.error(errorMessage).build();
 
-                        MessageFactory.create()
-                                .addEmbeds(embed)
-                                .send(ticketsChannel)
-                                .queue();
+                MessageFactory.create().addEmbeds(embed).send(ticketsChannel).queue();
             });
 
             to.delete().queue(ignored -> ticketManager.remove(from));
@@ -424,9 +395,6 @@ public class Ticket {
         String errorMessage = "Impossible d'envoyer un message privé à cet utilisateur!";
         MessageEmbed embed = embeds.error(errorMessage).build();
 
-        MessageFactory.create()
-                .addEmbeds(embed)
-                .editReply(reply)
-                .queue();
+        MessageFactory.create().addEmbeds(embed).editReply(reply).queue();
     }
 }

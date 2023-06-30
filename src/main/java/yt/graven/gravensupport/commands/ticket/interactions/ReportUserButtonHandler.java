@@ -21,14 +21,13 @@ public class ReportUserButtonHandler implements InteractionAction<ButtonInteract
                         .setPlaceholder("Identifiant de l'utilisateur")
                         .setRequiredRange(15, 20)
                         .setRequired(true)
-                        .build()
-                )
+                        .build())
                 .addActionRow(TextInput.create("reason", "Raison", TextInputStyle.PARAGRAPH)
-                        .setPlaceholder("""
+                        .setPlaceholder(
+                                """
                                 Décrivez en quelques mots la raison de votre signalement.
                                 """)
-                        .build()
-                )
+                        .build())
                 .build();
 
         event.replyModal(modal).queue();
