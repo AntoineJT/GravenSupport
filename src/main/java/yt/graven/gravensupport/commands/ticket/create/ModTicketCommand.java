@@ -21,7 +21,6 @@ import yt.graven.gravensupport.commands.ticket.TicketOpeningReason;
 import yt.graven.gravensupport.utils.commands.Command;
 import yt.graven.gravensupport.utils.commands.ICommand;
 import yt.graven.gravensupport.utils.exceptions.CommandCancelledException;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 import yt.graven.gravensupport.utils.messages.Embeds;
 
 @Command
@@ -56,7 +55,7 @@ public class ModTicketCommand implements ICommand {
     }
 
     @Override
-    public void run(SlashCommandInteractionEvent event) throws TicketException, IOException, CommandCancelledException {
+    public void run(SlashCommandInteractionEvent event) throws IOException, CommandCancelledException {
         switch (event.getSubcommandName()) {
             case "open-with" -> this.runWithSelectedUser(event);
             default -> event.reply("Cette commande n'est pas encore implémentée.")
@@ -65,7 +64,7 @@ public class ModTicketCommand implements ICommand {
         }
     }
 
-    private void runWithSelectedUser(SlashCommandInteractionEvent event) throws IOException, TicketException {
+    private void runWithSelectedUser(SlashCommandInteractionEvent event) throws IOException {
         InteractionHook reply = event.deferReply(true).complete();
         if (!Arrays.asList(TEXT, GUILD_PRIVATE_THREAD, GUILD_PUBLIC_THREAD).contains(event.getChannelType())) {
             embeds.errorMessage("Cette commande doit être exécutée sur un serveur.")

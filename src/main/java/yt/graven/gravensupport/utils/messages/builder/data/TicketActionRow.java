@@ -12,12 +12,6 @@ public class TicketActionRow {
 
     private final List<ItemComponent> components = new ArrayList<>();
 
-    public TicketActionRow() {}
-
-    public TicketActionRow(ItemComponent... components) {
-        this.components.addAll(List.of(components));
-    }
-
     public TicketActionRow addButton(String id, UnaryOperator<TicketButton> applier) {
         TicketButton button = new TicketButton(id);
         applier.apply(button);

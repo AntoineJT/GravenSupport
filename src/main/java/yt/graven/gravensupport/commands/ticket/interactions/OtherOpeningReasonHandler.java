@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import yt.graven.gravensupport.commands.ticket.Ticket;
 import yt.graven.gravensupport.commands.ticket.TicketManager;
 import yt.graven.gravensupport.commands.ticket.TicketOpeningReason;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 import yt.graven.gravensupport.utils.interactions.InteractionAction;
 import yt.graven.gravensupport.utils.messages.Embeds;
 
@@ -24,7 +23,7 @@ public class OtherOpeningReasonHandler implements InteractionAction<ModalInterac
     private final TicketManager manager;
 
     @Override
-    public void run(ModalInteractionEvent event) throws TicketException, IOException {
+    public void run(ModalInteractionEvent event) throws IOException {
 
         if (event.getChannel().getType() != ChannelType.PRIVATE) return;
 

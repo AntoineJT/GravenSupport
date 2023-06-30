@@ -17,7 +17,6 @@ import yt.graven.gravensupport.commands.ticket.TicketManager;
 import yt.graven.gravensupport.utils.commands.Command;
 import yt.graven.gravensupport.utils.commands.ICommand;
 import yt.graven.gravensupport.utils.exceptions.CommandCancelledException;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 import yt.graven.gravensupport.utils.messages.Embeds;
 
 @Command
@@ -41,7 +40,7 @@ public class IdCommand implements ICommand {
     }
 
     @Override
-    public void run(SlashCommandInteractionEvent event) throws TicketException, IOException, CommandCancelledException {
+    public void run(SlashCommandInteractionEvent event) throws IOException, CommandCancelledException {
 
         if (event.getChannelType() == ChannelType.PRIVATE) {
             throw new CommandCancelledException();

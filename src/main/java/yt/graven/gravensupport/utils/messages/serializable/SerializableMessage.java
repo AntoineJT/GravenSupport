@@ -33,7 +33,7 @@ public class SerializableMessage {
     private MessageType messageType;
 
     @Expose
-    private List<Map<String, Object>> embeds = new ArrayList<java.util.Map<String, Object>>();
+    private List<Map<String, Object>> embeds = new ArrayList<>();
 
     public void setCreationTimestamp(Instant creationTimestamp) {
         this.creationTimestamp = creationTimestamp.toEpochMilli();

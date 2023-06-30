@@ -19,12 +19,8 @@ import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import yt.graven.gravensupport.commands.ping.PingCommand;
 import yt.graven.gravensupport.commands.ticket.Ticket;
 import yt.graven.gravensupport.commands.ticket.TicketManager;
-import yt.graven.gravensupport.commands.ticket.close.CloseCommand;
-import yt.graven.gravensupport.commands.ticket.create.TicketCommand;
-import yt.graven.gravensupport.commands.ticket.id.IdCommand;
 import yt.graven.gravensupport.utils.commands.CommandRegistry;
 import yt.graven.gravensupport.utils.exceptions.CommandCancelledException;
 import yt.graven.gravensupport.utils.exceptions.TicketException;
@@ -41,10 +37,6 @@ public class EventReceiver extends ListenerAdapter {
 
     private final ApplicationContext context;
     private final CommandRegistry registry;
-    private final PingCommand pingCommand;
-    private final TicketCommand ticketCommand;
-    private final CloseCommand closeCommand;
-    private final IdCommand idCommand;
     private final YamlConfiguration config;
     private final TicketManager ticketManager;
     private final Embeds embeds;
@@ -73,7 +65,7 @@ public class EventReceiver extends ListenerAdapter {
         registry.getCommandByName(event.getName()).ifPresent(cmd -> {
             try {
                 cmd.run(event);
-            } catch (TicketException | IOException | CommandCancelledException e) {
+            } catch (IOException | CommandCancelledException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -128,7 +120,7 @@ public class EventReceiver extends ListenerAdapter {
         ButtonActions.getFromActionId(event.getButton().getId().split(";")[0]).ifPresent(a -> {
             try {
                 a.run(context, event);
-            } catch (TicketException | IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -140,7 +132,7 @@ public class EventReceiver extends ListenerAdapter {
                 .ifPresent(a -> {
                     try {
                         a.run(context, event);
-                    } catch (TicketException | IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
@@ -151,7 +143,7 @@ public class EventReceiver extends ListenerAdapter {
         ModalActions.getFromActionId(event.getModalId().split(";")[0]).ifPresent(a -> {
             try {
                 a.run(context, event);
-            } catch (TicketException | IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });

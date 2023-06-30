@@ -11,10 +11,6 @@ public class TicketSelectMenu {
         this.builder = StringSelectMenu.create(id);
     }
 
-    public TicketSelectMenu(StringSelectMenu.Builder builder) {
-        this.builder = builder;
-    }
-
     public TicketSelectMenu addOption(Emoji emoji, String label, String value) {
         builder.addOption(label, value, emoji);
         return this;

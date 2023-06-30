@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionE
 import org.springframework.context.ApplicationContext;
 import yt.graven.gravensupport.commands.ticket.interactions.FirstSentenceHandler;
 import yt.graven.gravensupport.commands.ticket.interactions.OpeningReasonHandler;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 
 @RequiredArgsConstructor
 public enum SelectionMenuActions {
@@ -20,8 +19,7 @@ public enum SelectionMenuActions {
     private final String actionId;
     private final Function<ApplicationContext, InteractionAction<StringSelectInteractionEvent>> handler;
 
-    public void run(ApplicationContext context, StringSelectInteractionEvent event)
-            throws TicketException, IOException {
+    public void run(ApplicationContext context, StringSelectInteractionEvent event) throws IOException {
         handler.apply(context).run(event);
     }
 

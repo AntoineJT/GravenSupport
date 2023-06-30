@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import yt.graven.gravensupport.commands.ticket.Ticket;
 import yt.graven.gravensupport.commands.ticket.TicketManager;
 import yt.graven.gravensupport.commands.ticket.TicketOpeningReason;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 import yt.graven.gravensupport.utils.interactions.InteractionAction;
 import yt.graven.gravensupport.utils.messages.Embeds;
 
@@ -25,7 +24,7 @@ public class ReportUserModalHandler implements InteractionAction<ModalInteractio
     private final Embeds embeds;
 
     @Override
-    public void run(ModalInteractionEvent event) throws TicketException, IOException {
+    public void run(ModalInteractionEvent event) throws IOException {
 
         InteractionHook reply = event.deferReply(true).complete();
 

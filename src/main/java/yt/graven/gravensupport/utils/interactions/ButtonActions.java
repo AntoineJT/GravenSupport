@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import org.springframework.context.ApplicationContext;
 import yt.graven.gravensupport.commands.ping.interactions.RefreshPingHandler;
 import yt.graven.gravensupport.commands.ticket.interactions.*;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 
 @RequiredArgsConstructor
 public enum ButtonActions {
@@ -27,7 +26,7 @@ public enum ButtonActions {
     private final String actionId;
     private final Function<ApplicationContext, InteractionAction<ButtonInteractionEvent>> handler;
 
-    public void run(ApplicationContext context, ButtonInteractionEvent event) throws TicketException, IOException {
+    public void run(ApplicationContext context, ButtonInteractionEvent event) throws IOException {
         handler.apply(context).run(event);
     }
 

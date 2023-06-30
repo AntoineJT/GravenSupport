@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import yt.graven.gravensupport.commands.ticket.TicketManager;
 import yt.graven.gravensupport.utils.commands.Command;
 import yt.graven.gravensupport.utils.commands.ICommand;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 import yt.graven.gravensupport.utils.messages.Embeds;
 import yt.graven.gravensupport.utils.messages.builder.MessageFactory;
 
@@ -33,7 +32,7 @@ public class TicketCommand implements ICommand {
     }
 
     @Override
-    public void run(SlashCommandInteractionEvent event) throws TicketException, IOException {
+    public void run(SlashCommandInteractionEvent event) throws IOException {
         if (ticketManager.exists(event.getUser())) {
             MessageFactory.create()
                     .addEmbeds(embeds.ticketAlreadyExists(true))

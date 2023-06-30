@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import org.springframework.context.ApplicationContext;
 import yt.graven.gravensupport.commands.ticket.interactions.OtherOpeningReasonHandler;
 import yt.graven.gravensupport.commands.ticket.interactions.ReportUserModalHandler;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 
 @RequiredArgsConstructor
 public enum ModalActions {
@@ -20,7 +19,7 @@ public enum ModalActions {
     private final String actionId;
     private final Function<ApplicationContext, InteractionAction<ModalInteractionEvent>> handler;
 
-    public void run(ApplicationContext context, ModalInteractionEvent event) throws TicketException, IOException {
+    public void run(ApplicationContext context, ModalInteractionEvent event) throws IOException {
         handler.apply(context).run(event);
     }
 

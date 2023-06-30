@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
 import org.springframework.stereotype.Component;
-import yt.graven.gravensupport.utils.exceptions.TicketException;
 import yt.graven.gravensupport.utils.interactions.InteractionAction;
 
 @Component
@@ -15,7 +14,7 @@ import yt.graven.gravensupport.utils.interactions.InteractionAction;
 public class ReportUserButtonHandler implements InteractionAction<ButtonInteractionEvent> {
 
     @Override
-    public void run(ButtonInteractionEvent event) throws TicketException, IOException {
+    public void run(ButtonInteractionEvent event) throws IOException {
         Modal modal = Modal.create("op-report-user", "Signaler un utilisateur")
                 .addActionRow(TextInput.create("user-id", "ID de l'utilisateur", TextInputStyle.SHORT)
                         .setPlaceholder("Identifiant de l'utilisateur")

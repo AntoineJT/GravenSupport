@@ -24,7 +24,7 @@ public class TicketManager {
 
     private final Map<Long, Ticket> tickets = new HashMap<>();
 
-    public Ticket create(User user) throws TicketException {
+    public Ticket create(User user) {
         if (exists(user)) {
             throw new TicketAlreadyExistsException(user);
         }
@@ -33,7 +33,7 @@ public class TicketManager {
         return t;
     }
 
-    public Ticket create(JDA jda, long userId) throws TicketException {
+    public Ticket create(JDA jda, long userId) {
         User user = jda.retrieveUserById(userId).complete();
         return create(user);
     }
@@ -46,20 +46,8 @@ public class TicketManager {
         return Optional.ofNullable(tickets.get(userId));
     }
 
-    public Ticket getOrCreate(User user) throws TicketException {
-        return get(user).orElse(create(user));
-    }
-
-    public Ticket getOrCreate(JDA jda, long userId) throws TicketException {
-        return get(userId).orElse(create(jda, userId));
-    }
-
     public boolean exists(User user) {
         return tickets.containsKey(user.getIdLong());
-    }
-
-    public boolean exists(long userId) {
-        return tickets.containsKey(userId);
     }
 
     public void store(Ticket ticket) {
@@ -86,6 +74,7 @@ public class TicketManager {
             try {
                 store(Ticket.loadFromChannel(this, embeds, config, channel));
             } catch (IOException e) {
+                // TODO throw it or remove it, let's see later
                 new TicketException("Impossible to load ticket from channel #" + channel.getName()).printStackTrace();
             }
         });
@@ -93,9 +82,5 @@ public class TicketManager {
 
     public void remove(User user) {
         this.tickets.remove(user.getIdLong());
-    }
-
-    public void remove(long userId) {
-        this.tickets.remove(userId);
     }
 }
