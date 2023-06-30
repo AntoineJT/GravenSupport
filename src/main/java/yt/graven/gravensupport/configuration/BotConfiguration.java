@@ -13,15 +13,13 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import yt.graven.gravensupport.common.exception.BotStartupException;
 import yt.graven.gravensupport.common.exception.ImpossibleException;
 import yt.graven.gravensupport.configuration.exception.ConfigurationException;
 
 @Configuration
-@ComponentScan("yt.graven.gravensupport")
-public class BotConfig {
+public class BotConfiguration {
     private static final String CONFIGURATION_FILE = "config.yml";
     private static final String DEFAULT_CONFIGURATION_FILE = "config.default.yml";
     private static final String CONFIGURATION_TOKEN_PROPERTY = "config.token";

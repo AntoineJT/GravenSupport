@@ -5,13 +5,14 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
-import yt.graven.gravensupport.configuration.BotConfig;
 
+@ComponentScan("yt.graven.gravensupport")
 public class Main {
 
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(BotConfig.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
         Startup startup = context.getBean(Startup.class);
         startup.run();
