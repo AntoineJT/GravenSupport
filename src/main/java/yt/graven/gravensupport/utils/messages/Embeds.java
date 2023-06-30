@@ -41,7 +41,6 @@ public class Embeds {
     }
 
     public TicketMessage ticketAlreadyExistsMessage(GuildMessageChannel ticketChannel, boolean personal) {
-        // spotless:off
         return MessageFactory.create()
                 .addEmbeds(ticketAlreadyExists(personal))
                 .addActionRow(actionRow -> actionRow
@@ -50,7 +49,6 @@ public class Embeds {
                                 .setLink(ticketChannel.getJumpUrl())
                         )
                 );
-        // spotless:on
     }
 
     public TicketMessage ping(PingComputer manager) {
@@ -60,7 +58,6 @@ public class Embeds {
                 .addField("↔️ Ping du Gateway :", "\n**`%s`** ms".formatted(manager.getGatewayPing()), false)
                 .addField("➡️ Ping de l'API :", "\n**`%s`** ms".formatted(manager.getRestPing()), false);
 
-        // spotless:off
         return MessageFactory.create()
                 .addEmbeds(embed)
                 .addActionRow(actionRow -> actionRow
@@ -70,7 +67,6 @@ public class Embeds {
                                 .setEmoji(Emoji.fromUnicode("🔁"))
                         )
                 );
-        // spotless:on
     }
 
     public EmbedBuilder noTicketAttached() {

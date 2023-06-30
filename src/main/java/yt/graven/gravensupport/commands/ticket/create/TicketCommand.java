@@ -35,12 +35,10 @@ public class TicketCommand implements ICommand {
     @Override
     public void run(SlashCommandInteractionEvent event) throws TicketException, IOException {
         if (ticketManager.exists(event.getUser())) {
-            // spotless:off
             MessageFactory.create()
                     .addEmbeds(embeds.ticketAlreadyExists(true))
                     .reply(event)
                     .queue();
-            // spotless:on
             return;
         }
 

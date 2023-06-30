@@ -64,7 +64,6 @@ public class OpeningReasonHandler implements InteractionAction<StringSelectInter
         }
 
         if (selectedOption.getValue().equalsIgnoreCase("op-user-report")) {
-            // spotless:off
             MessageFactory.create()
                     .addEmbeds(new EmbedBuilder()
                             .setTitle(":warning: Vous êtes sur le point de transmettre un signalement à la modération.")
@@ -82,7 +81,6 @@ public class OpeningReasonHandler implements InteractionAction<StringSelectInter
                     )
                     .reply(event)
                     .queue();
-            // spotless:on
 
             return;
         }

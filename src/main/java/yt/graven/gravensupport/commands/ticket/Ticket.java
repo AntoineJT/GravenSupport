@@ -113,7 +113,6 @@ public class Ticket {
                 .ignore(ErrorResponse.UNKNOWN_MESSAGE)
                 .handle(ErrorResponse.CANNOT_SEND_TO_USER, exception -> handleUnableToDmUser(reply));
 
-        // spotless:off
         MessageFactory.create()
                 .addEmbeds(embeds.proposeOpening(sentEmote.getFormatted()))
                 .addActionRow(actionRow -> actionRow
@@ -135,19 +134,16 @@ public class Ticket {
                         msg -> reply.editOriginal("➡️ " + msg.getChannel().getAsMention()).queue(),
                         errorHandler
                 );
-        // spotless:on
     }
 
     /**
      * Directly opens a ticket without asking for the user permission.
      */
     public void forceOpening(User by, TicketOpeningReason reason) throws IOException {
-        // spotless:off
         MessageFactory.create()
                 .addEmbeds(embeds.forceOpening(sentEmote.getFormatted(), reason))
                 .send(from)
                 .queue();
-        // spotless:on
 
         openOnServer(true, by, reason);
     }
@@ -186,7 +182,6 @@ public class Ticket {
                     case TicketOpeningReason.Empty r -> "`Aucune raison`";
                 };
 
-        // spotless:off
         MessageEmbed reasonEmbed = new EmbedBuilder()
                 .setTitle("\uD83D\uDCDD Raison de l'ouverture du ticket")
                 .setDescription(description)
@@ -231,12 +226,10 @@ public class Ticket {
                     .send(channel)
                     .complete();
         }
-        // spotless:on
 
         TextChannel ticketChannel =
                 moderationGuild.getTextChannelById(config.getString("config.ticket_guild.channels_ids.tickets"));
 
-        // spotless:off
         MessageFactory.create()
                 .addEmbeds(embeds.ticketOpening(forced, by, from, channel, reason.reason()))
                 .addActionRow(actionRow -> actionRow
@@ -251,7 +244,6 @@ public class Ticket {
                 )
                 .send(ticketChannel)
                 .queue();
-        // spotless:on
 
         opened = true;
     }
@@ -315,7 +307,6 @@ public class Ticket {
                     true);
         }
 
-        // spotless:off
         MessageFactory.create()
                 .addEmbeds(confirmEmbed)
                 .addActionRow(actionRow -> actionRow
@@ -331,7 +322,6 @@ public class Ticket {
                 )
                 .send(message.getChannel())
                 .queue();
-        // spotless:on
     }
 
     public CompletableFuture<Message> confirmSendToUser(Message message) {
@@ -342,7 +332,6 @@ public class Ticket {
                     ? message.getContentRaw().substring(1).trim()
                     : message.getContentRaw().trim();
 
-            // spotless:off
             MessageFactory.create()
                     .setTextContent(content)
                     .apply(builder -> {
@@ -358,7 +347,6 @@ public class Ticket {
                     .queue(cf::complete, e -> embeds.errorMessage(e.getMessage())
                             .send(to)
                             .queue());
-            // spotless:on
         });
 
         return cf;
@@ -392,7 +380,6 @@ public class Ticket {
             TextChannel ticketsChannel =
                     moderationGuild.getTextChannelById(config.getString("config.ticket_guild.channels_ids.tickets"));
 
-            // spotless:off
             MessageFactory.create()
                     .addEmbeds(embeds.ticketClosing(from, report.getJumpUrl()))
                     .addActionRow(actionRow -> actionRow
@@ -403,7 +390,6 @@ public class Ticket {
                                             .formatted(reportJsonUrl))))
                     .send(ticketsChannel)
                     .queue();
-            // spotless:on
 
             String ticketCommand = from.getJDA().retrieveCommands().complete().stream()
                     .filter(a -> a.getName().equalsIgnoreCase("ticket"))
@@ -422,12 +408,10 @@ public class Ticket {
                 String errorMessage = "Impossible d'informer l'utilisateur de la fermeture du ticket !";
                 MessageEmbed embed = embeds.error(errorMessage).build();
 
-                // spotless:off
                         MessageFactory.create()
                                 .addEmbeds(embed)
                                 .send(ticketsChannel)
                                 .queue();
-                        // spotless:on
             });
 
             to.delete().queue(ignored -> ticketManager.remove(from));
@@ -440,11 +424,9 @@ public class Ticket {
         String errorMessage = "Impossible d'envoyer un message privé à cet utilisateur!";
         MessageEmbed embed = embeds.error(errorMessage).build();
 
-        // spotless:off
         MessageFactory.create()
                 .addEmbeds(embed)
                 .editReply(reply)
                 .queue();
-        // spotless:on
     }
 }
